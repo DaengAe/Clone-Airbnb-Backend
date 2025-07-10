@@ -9,5 +9,4 @@ public class AribnbApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AribnbApplication.class, args);
 	}
-
 }
