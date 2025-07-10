@@ -1,9 +1,10 @@
-package com.clone.Aribnb.web.user.signup;
+package com.clone.Aribnb.web.user.controller;
 
 import com.clone.Aribnb.domain.user.User;
 import com.clone.Aribnb.domain.user.UserRole;
 import com.clone.Aribnb.domain.user.repository.UserRepository;
 import com.clone.Aribnb.domain.user.service.UserService;
+import com.clone.Aribnb.web.user.dto.SignupRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.clone.Aribnb.web.user.signup;
+package com.clone.Aribnb.web.user.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
