@@ -1,4 +1,4 @@
-package com.clone.Aribnb.web.user.signup;
+package com.clone.Airbnb.web.user.signup;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.clone.Aribnb.jwt;
+package com.clone.Airbnb.jwt;
 
-import com.clone.Aribnb.web.user.dto.LoginRequest;
+import com.clone.Airbnb.web.user.dto.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
