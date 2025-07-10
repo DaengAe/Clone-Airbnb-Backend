@@ -1,12 +1,14 @@
 package com.clone.Aribnb.domain.user.service;
 
 import com.clone.Aribnb.domain.user.User;
+import com.clone.Aribnb.domain.user.UserRole;
 import com.clone.Aribnb.domain.user.repository.UserRepository;
+import com.clone.Aribnb.web.user.dto.LoginRequest;
+import com.clone.Aribnb.web.user.dto.SignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,23 +17,37 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 로그인 로직
     @Override
-    public User login(String email, String rawPassword) {
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isEmpty()) return null;
+    @Transactional(readOnly = true)
+    public User login(LoginRequest loginRequest) {
+        User user = userRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
 
-        User user = userOpt.get();
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            return null;
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
         return user;
     }
 
-    // 비밀번호 암호화
     @Override
-    public String encodePassword(String rawPassword) {
-        return passwordEncoder.encode(rawPassword);
+    @Transactional
+    public void signup(SignupRequest signupRequest) {
+        if (!signupRequest.passwordsMatch()) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        if (userRepository.findByEmail(signupRequest.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+        }
+
+        User user = User.builder()
+                .name(signupRequest.getName())
+                .email(signupRequest.getEmail())
+                .password(passwordEncoder.encode(signupRequest.getPassword()))
+                .role(UserRole.USER)
+                .build();
+
+        userRepository.save(user);
     }
 }
