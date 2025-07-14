@@ -3,6 +3,7 @@ package com.clone.Airbnb.domain.user.service;
 import com.clone.Airbnb.domain.user.entity.User;
 import com.clone.Airbnb.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import com.clone.Airbnb.domain.user.details.CustomUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,11 +21,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다."));
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail())
-                .password(user.getPassword()) // 암호화된 비밀번호
-                .roles("USER")
-                .build();
+        return new CustomUserDetails(user);
     }
 }
 

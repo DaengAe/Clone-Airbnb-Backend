@@ -1,6 +1,6 @@
 package com.clone.Airbnb.domain.user.entity;
 
-import com.clone.Airbnb.domain.user.role.UserRole;
+import com.clone.Airbnb.domain.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 

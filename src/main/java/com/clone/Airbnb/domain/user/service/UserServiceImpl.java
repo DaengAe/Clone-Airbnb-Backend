@@ -2,7 +2,7 @@ package com.clone.Airbnb.domain.user.service;
 
 import com.clone.Airbnb.domain.user.entity.User;
 import com.clone.Airbnb.domain.user.repository.UserRepository;
-import com.clone.Airbnb.domain.user.role.UserRole;
+import com.clone.Airbnb.domain.user.enums.UserRole;
 import com.clone.Airbnb.web.user.dto.LoginRequest;
 import com.clone.Airbnb.web.user.dto.SignupRequest;
 import lombok.RequiredArgsConstructor;
