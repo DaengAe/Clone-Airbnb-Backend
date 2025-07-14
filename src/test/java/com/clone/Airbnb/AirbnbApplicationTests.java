@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AribnbApplicationTests {
+class AirbnbApplicationTests {
 
 	@Test
 	void contextLoads() {

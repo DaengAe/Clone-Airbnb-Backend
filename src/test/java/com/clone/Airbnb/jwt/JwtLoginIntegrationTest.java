@@ -48,6 +48,6 @@ class JwtLoginIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("이메일 또는 비밀번호가 올바르지 않습니다."));
+                .andExpect(content().string("{\"error\":\"비밀번호가 일치하지 않습니다.\"}"));
     }
 }

@@ -1,3 +1,5 @@
+package com.clone.Airbnb.util;
+
 import java.security.SecureRandom;
 
 public class SecretKeyGenerator {

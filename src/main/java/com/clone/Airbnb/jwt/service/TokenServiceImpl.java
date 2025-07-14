@@ -20,7 +20,7 @@ public class TokenServiceImpl implements TokenService {
         String refreshToken = jwtProvider.generateRefreshToken(user.getEmail());
         refreshTokenStore.storeRefreshToken(user.getEmail(), refreshToken);
 
-        return new TokenResponse(accessToken, refreshToken);
+        return new TokenResponse(accessToken, refreshToken, user.getRole());
     }
 
     @Override
