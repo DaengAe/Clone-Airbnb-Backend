@@ -52,6 +52,12 @@ public class Accommodation {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "processed_at") // processed_at 필드 추가
+    private LocalDateTime processedAt;
+
+    @Column(name = "rejection_reason", length = 500) // 거절 이유 필드 추가
+    private String rejectionReason;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AccommodationStatus status;

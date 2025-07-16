@@ -27,12 +27,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         String authorizationHeader = request.getHeader("Authorization");
-        System.out.println("Authorization Header: " + authorizationHeader);
+        System.out.println("인증 헤더: " + authorizationHeader);
         String token = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token = authorizationHeader.substring(7); // "Bearer " 다음부터 잘라냄
-            System.out.println("Extracted Token: " + token);
+            System.out.println("파싱된 토큰: " + token);
         }
 
         if (token != null) {
@@ -45,12 +45,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                System.out.println("Authentication set in SecurityContext.");
+                System.out.println("인증 객체가 SecurityContext에 저장됨.");
             } else {
-                System.out.println("Token is invalid.");
+                System.out.println("토큰이 유효하지 않습니다.");
             }
         } else {
-            System.out.println("No token found in Authorization header.");
+            System.out.println("인증 헤더에서 토큰을 찾을 수 없습니다.");
         }
 
         filterChain.doFilter(request, response);

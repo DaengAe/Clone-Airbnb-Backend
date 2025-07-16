@@ -33,7 +33,7 @@ public class HostRequestController {
 
     // 신청 로직
     @PostMapping("/host-requests/apply")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'HOST')")
     public ResponseEntity<Void> applyForHost(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @RequestBody HostApplyRequest requestDto) {

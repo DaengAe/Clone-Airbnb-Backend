@@ -1,12 +1,16 @@
 package com.clone.Airbnb.web.accommodation.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
-public class AccommodationRegisterRequest {
+@Getter
+@Setter
+@AllArgsConstructor
+public class AccommodationDetailsResponse {
+    private Long id;
     private String name;
     private String city;
     private String district;

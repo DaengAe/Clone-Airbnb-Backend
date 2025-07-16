@@ -30,7 +30,7 @@ public class HostRequestService {
     @Transactional(readOnly = true)
     public Optional<HostRequestStatusResponse> getHostRequestStatus(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         return hostRequestRepository.findByUser(user)
                 .map(request -> new HostRequestStatusResponse(request.getStatus(), request.getCreatedAt()));
@@ -42,10 +42,10 @@ public class HostRequestService {
     @Transactional
     public void applyForHost(Long userId, HostApplyRequest requestDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
 
         if (user.getRole() == UserRole.HOST) {
-            throw new IllegalStateException("User is already a host.");
+            throw new IllegalStateException("이미 호스트 권한이 있습니다.");
         }
 
         // 유저 ID로 신청 목록에서 유저 조회
@@ -54,7 +54,7 @@ public class HostRequestService {
         if (existingRequest.isPresent()) { // 값이 있으면 업데이트
             HostRequest request = existingRequest.get();
             if (request.getStatus() == HostRequestStatus.PENDING || request.getStatus() == HostRequestStatus.APPROVED) {
-                throw new IllegalStateException("Host request already pending or approved.");
+                throw new IllegalStateException("이미 호스트 신청을 완료 하였습니다.");
             } else if (request.getStatus() == HostRequestStatus.REJECTED) {  // 거절 당한 후 재신청 시
                 // 기존의 거절된 요청 업데이트
                 request.setStatus(HostRequestStatus.PENDING);
@@ -100,11 +100,11 @@ public class HostRequestService {
     @Transactional
     public void approveHostRequest(Long hostRequestId) {
         HostRequest hostRequest = hostRequestRepository.findById(hostRequestId)
-                .orElseThrow(() -> new IllegalArgumentException("Host request not found")); // 신청이 없는 경우
+                .orElseThrow(() -> new IllegalArgumentException("호스트 신청을 찾을 수 없습니다.")); // 신청이 없는 경우
 
         // 승인 대기중이 아닌 경우
         if (hostRequest.getStatus() != HostRequestStatus.PENDING) {
-            throw new IllegalStateException("Host request is not in PENDING status.");
+            throw new IllegalStateException("호스트 신청이 [승인 대기중]이 아닙니다.");
         }
 
         // 상태 업데이트 (승인 대기중 -> 승인)
@@ -122,11 +122,11 @@ public class HostRequestService {
     @Transactional
     public void rejectHostRequest(Long hostRequestId) {
         HostRequest hostRequest = hostRequestRepository.findById(hostRequestId)
-                .orElseThrow(() -> new IllegalArgumentException("Host request not found")); // 신청이 없는 경우
+                .orElseThrow(() -> new IllegalArgumentException("호스트 신청을 찾을 수 없습니다.")); // 신청이 없는 경우
 
         // 승인 대기중이 아닌 경우
         if (hostRequest.getStatus() != HostRequestStatus.PENDING) {
-            throw new IllegalStateException("Host request is not in PENDING status.");
+            throw new IllegalStateException("호스트 신청이 [승인 대기중]이 아닙니다.");
         }
 
         // 상태 업데이트 (승인 대기중 -> 거절)
